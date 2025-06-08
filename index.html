@@ -251,6 +251,37 @@ const keys = { KeyA: false, KeyD: false, KeyW: false, KeyS: false };
 onkeydown = e => { if (e.code in keys) keys[e.code] = true; };
 onkeyup = e => { if (e.code in keys) keys[e.code] = false; };
 
+// 📱 모바일 터치 드래그 이동 지원
+let touchStart = null;
+
+canvas.addEventListener('touchstart', e => {
+  if (e.touches.length === 1) {
+    touchStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  }
+}, { passive: false });
+
+canvas.addEventListener('touchmove', e => {
+  if (!touchStart || e.touches.length !== 1) return;
+
+  const touch = e.touches[0];
+  const dx = (touch.clientX - touchStart.x) * 0.01; // 감도 조절
+  const dy = (touch.clientY - touchStart.y) * 0.01;
+
+  playerGroup.position.x += dx;
+  playerGroup.position.y -= dy;
+
+  playerGroup.position.x = THREE.MathUtils.clamp(playerGroup.position.x, -5, 5);
+  playerGroup.position.y = THREE.MathUtils.clamp(playerGroup.position.y, -5, 5);
+
+  touchStart = { x: touch.clientX, y: touch.clientY };
+  e.preventDefault(); // 스크롤 방지
+}, { passive: false });
+
+canvas.addEventListener('touchend', () => {
+  touchStart = null;
+});
+
+
 const enemyGeom = new THREE.SphereGeometry(1.2, 20, 20);
 const planetTextures = [
   'textures/planet_mars.jpg',
