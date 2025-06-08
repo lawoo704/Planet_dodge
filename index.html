@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Planet Dodge – 연기 꼬리 효과</title>
+  <title> 지구의 모험 </title>
   <style>
     body { margin: 0; overflow: hidden; background: #000 }
     #hud {
@@ -251,7 +251,7 @@ const keys = { KeyA: false, KeyD: false, KeyW: false, KeyS: false };
 onkeydown = e => { if (e.code in keys) keys[e.code] = true; };
 onkeyup = e => { if (e.code in keys) keys[e.code] = false; };
 
-// 📱 모바일 터치 드래그 이동 지원
+// 모바일 터치 드래그 이동 지원
 let touchStart = null;
 
 canvas.addEventListener('touchstart', e => {
@@ -355,7 +355,7 @@ function spawnShield() {
   shieldMesh = new THREE.Mesh(geo, mat);
   shieldMesh.position.set((Math.random() * 2 - 1) * 6, (Math.random() * 2 - 1) * 6, -80);
 
-  // ✅ 쉴드는 적보다 느린 속도로 이동
+  // 쉴드는 적보다 느린 속도로 이동
   const baseSpeed = THREE.MathUtils.randFloat(4, 8); // 예: 4~8
   shieldMesh.userData.speed = baseSpeed * speedMultiplier * 0.5;
 
@@ -400,7 +400,7 @@ function endGame() {
   isGameOver = true;
   bgm.pause();
 
-  // 📱 카메라 흔들림 시작
+  // 카메라 흔들림 시작
   isShaking = true;
   shakeEndTime = performance.now() + 1000; // 1초 동안 흔들림
 
@@ -414,7 +414,7 @@ function endGame() {
   localStorage.setItem('bestScore', bestScore);
   bestScoreDiv.textContent = 'Best: ' + Math.floor(bestScore);
 
-  // 💥 화면 흔들림 시작
+  // 화면 흔들림 시작
   isShaking = true;
   shakeEndTime = performance.now() + 500;
 
@@ -484,7 +484,7 @@ for (let i = enemyPool.length - 1; i >= 0; i--) {
     p.life -= dt * 0.5;
   });
 
-  // 🛡️ 쉴드 이동
+  // 쉴드 이동
 if (shieldMesh) {
   shieldMesh.position.z += shieldMesh.userData.speed * dt;
 
@@ -506,7 +506,7 @@ if (shieldMesh) {
 }
 
 
-// 💥 적과 충돌
+// 적과 충돌
 if (isHit(e)) {
   if (shieldActive) {
     shieldActive = false;
